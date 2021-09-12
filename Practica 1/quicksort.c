@@ -110,7 +110,7 @@ POSICION Pivot(TIPO numeros[], POSICION inicio, POSICION final)
         while (numeros[j] > pivote)
             j--;
 
-        /*si la posicipon de la izquierda es menor a la derecha, se intercambian sus valores*/
+        /*si la posicion de la izquierda es menor a la derecha, se intercambian sus valores*/
         if (i < j)
         {
             Intercambiar(numeros, i, j);
