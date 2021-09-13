@@ -57,6 +57,9 @@ int main(int argc, char* argv[])
     for(int i = 0; i < n; i++)
 		printf("%d\n",numeros[i]);
 
+    /*Se libera la memoria*/
+    free(numeros);
+
 	return 0;
 }
 
