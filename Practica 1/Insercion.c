@@ -1,12 +1,12 @@
-#include<stdio.h>
-#include<stdlib.h>
-
 /*
 TItulo: Practica 1, algoritmo "Ordenamiento por Insercion"
 Descripcion: Implementacion del algoritmo de insercion
 Fecha: 13/09/2021
 Version 1.0
 */
+
+#include<stdio.h>
+#include<stdlib.h>
 
 #define TIPO int //tipo de dato que se ingresaran
 #define FORMATO "%d" //formato de datos que se ingresaran

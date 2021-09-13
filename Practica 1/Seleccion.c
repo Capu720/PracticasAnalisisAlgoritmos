@@ -1,6 +1,3 @@
-#include<stdio.h>
-#include<stdlib.h>
-
 /*
 TItulo: Practica 1, algoritmo "Ordenamiento por Seleccion"
 Descripcion: Implementacion del algoritmo de seleccion
@@ -8,9 +5,12 @@ Fecha: 13/09/2021
 Version 1.0
 */
 
+#include<stdio.h>
+#include<stdlib.h>
+
 #define TIPO int //tipo de dato que se ingresaran
 #define FORMATO "%d" //formato de datos que se ingresaran
-#define NUM_ELE 100000 //tamaño de elementos a analizar
+#define NUM_ELE 10000000 //tamaño de elementos a analizar
 
 void Seleccion(TIPO *, TIPO);
 
@@ -32,6 +32,8 @@ int main()
 /*
 Version 1.0
 La siguiente funcion realiza un ordenamiento por el metodo de seleccion
+Busca l minimo elemento entre una posicion k y el final del areglo e intercambia el minimo con el elemento en la 
+posicion k
 Recibe como parametros un arrego y el tamaño del arreglo
 La funcion es de tipo void, por lo tanto no devuelve ningun valor
 */
@@ -55,7 +57,7 @@ void Seleccion(TIPO * A, TIPO n)
 			if(A[i]<A[p])//Si el valor que esta en la posicion i es menor que el valor en la posicion p
 				p = i;//Se asigna la posicion del elemento mas pequeño
 		
-		temp = A[p];//Guarda el valor del elemento mas pequeño en la variable p
+		temp = A[p];//Guarda el valor del elemento mas pequeño en la variable temp
 		//Se hace un intercambio entre el valor pequeño con el valor que esta en la posicion K
 		A[p] = A[k];
 		A[k] = temp;
