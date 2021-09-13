@@ -10,7 +10,7 @@ Version 1.0
 
 #define TIPO int //tipo de dato que se ingresaran
 #define FORMATO "%d" //formato de datos que se ingresaran
-#define NUM_ELE 100000 //tamaño de elementos a analizar
+#define NUM_ELE 10000000 //tamaño de elementos a analizar
 
 
 void Insercion(int *, int);
