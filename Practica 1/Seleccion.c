@@ -10,23 +10,36 @@ Version 1.0
 
 #define TIPO int //tipo de dato que se ingresaran
 #define FORMATO "%d" //formato de datos que se ingresaran
-#define NUM_ELE 10000000 //tamaño de elementos a analizar
 
+//se hace el esqueleto de la funcion seleccion
 void Seleccion(TIPO *, TIPO);
 
-int main()
+int main(int argc, char* argv[])
 {
+	int n;
+	//recibiendo el tamanio
+	if (argc != 2)
+	{
+		printf("\nIndique el tamanio del algoritmo - Ejemplo: [user@equipo]$ %s 100\n", argv[0]);
+		exit(1);
+	}
+	//Tomar el segundo argumento como tamaño del algoritmo
+	else
+	{
+		n = atoi(argv[1]);
+	}
+	
 	/*Se declara un apuntador de tipo enetero del tamaño de numero de elemntos que este
 	va a tener*/
-	TIPO * A = (TIPO *)malloc(sizeof(TIPO) * NUM_ELE);
+	TIPO * A = (TIPO *)malloc(sizeof(TIPO) * n);
 	TIPO i;
 
 	//Se introducen los elemntos por medio de la terminal mediante el archivo txt
-	for(i = 0; i<NUM_ELE; i++)
+	for(i = 0; i<n; i++)
 		scanf(FORMATO, &A[i]);
 
 	//Se manda a llamar a la funcion Seleccion
-	Seleccion(A,NUM_ELE);
+	Seleccion(A,n);
 }
 
 /*
@@ -63,4 +76,8 @@ void Seleccion(TIPO * A, TIPO n)
 		A[k] = temp;
 		
 	}
+	
+	//imprimiendo el arreglo ordenado
+	for(i=0; i<n; i++)
+		printf("%d\n", A[i]);
 }
