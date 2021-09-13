@@ -7,6 +7,12 @@
 //Compilación: "gcc main.c tiempo.x  -o main(teimpo.c si se tiene la implementación de la libreria o tiempo.o si solo se tiene el codigo objeto)"
 //Ejecución: "./main n" (Linux y MAC OS)
 //*****************************************************************
+/*
+* Titulo: Practica 1, algoritmo "Ordenamiento de Burbuja Osptimiazion 1"
+* Descripcion: Implementacion del algoritmo Burbuja con una primera optimizacion
+* Fecha: 13-sep-2021
+* Version: 1.0
+*/
 
 //*****************************************************************
 //LIBRERIAS INCLUIDAS
