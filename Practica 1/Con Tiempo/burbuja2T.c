@@ -34,6 +34,7 @@
 //*****************************************************************
 void burbujaOpt2(int A[], int n);/*Prototipo de la funcion*/
 /*
+*Descripcion: Ordena elementos de un arreglo comparando e intercambiando uno a uno
 *Recibe: Un areglo y el tamanio
 *Regresa: void
 *Errores: Ninguno
