@@ -125,9 +125,9 @@ int main(int argc, char *argv[])
 	//******************************************************************
 	uswtime(&utime1, &stime1, &wtime1);
 
-	/*se imprime el arreglo ordenado*/
+	/*se imprime el arreglo ordenado
 	for (i = 0; i < n; i++)
-		printf("%d\n", numeros[i]);
+		printf("%d\n", numeros[i]);*/
 	/*Se libera la memoria*/
 	free(numeros);
 
