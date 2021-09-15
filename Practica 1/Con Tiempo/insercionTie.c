@@ -82,22 +82,32 @@ int main (int argc, char* argv[])
 	//Evaluar los tiempos de ejecución 
 	//******************************************************************
 	uswtime(&utime1, &stime1, &wtime1);
+
+	printf("\n");
+	/*Se imprime el caso de pruba*/
+	if(n==100)
+		printf("\tReal\t user\t sys(E/S)\t CPU/wall\n");
+    printf("n = %d\t", n);
+	printf("%.10e\t",  wtime1 - wtime0);
+	printf("%.10e\t",  utime1 - utime0);
+	printf("%.10e\t",  stime1 - stime0);
+	printf("%.10f %%\t\n",100.0 * (utime1 - utime0 + stime1 - stime0) / (wtime1 - wtime0));
 	
 	//Cálculo del tiempo de ejecución del programa
-	printf("\n");
-	printf("real (Tiempo total)  %.10f s\n",  wtime1 - wtime0);
-	printf("user (Tiempo de procesamiento en CPU) %.10f s\n",  utime1 - utime0);
-	printf("sys (Tiempo en acciónes de E/S)  %.10f s\n",  stime1 - stime0);
-	printf("CPU/Wall   %.10f %% \n",100.0 * (utime1 - utime0 + stime1 - stime0) / (wtime1 - wtime0));
-	printf("\n");
+	// printf("\n");
+	// printf("real (Tiempo total)  %.10f s\n",  wtime1 - wtime0);
+	// printf("user (Tiempo de procesamiento en CPU) %.10f s\n",  utime1 - utime0);
+	// printf("sys (Tiempo en acciónes de E/S)  %.10f s\n",  stime1 - stime0);
+	// printf("CPU/Wall   %.10f %% \n",100.0 * (utime1 - utime0 + stime1 - stime0) / (wtime1 - wtime0));
+	// printf("\n");
 	
-	//Mostrar los tiempos en formato exponecial
-	printf("\n");
-	printf("real (Tiempo total)  %.10e s\n",  wtime1 - wtime0);
-	printf("user (Tiempo de procesamiento en CPU) %.10e s\n",  utime1 - utime0);
-	printf("sys (Tiempo en acciónes de E/S)  %.10e s\n",  stime1 - stime0);
-	printf("CPU/Wall   %.10f %% \n",100.0 * (utime1 - utime0 + stime1 - stime0) / (wtime1 - wtime0));
-	printf("\n");
+	// //Mostrar los tiempos en formato exponecial
+	// printf("\n");
+	// printf("real (Tiempo total)  %.10e s\n",  wtime1 - wtime0);
+	// printf("user (Tiempo de procesamiento en CPU) %.10e s\n",  utime1 - utime0);
+	// printf("sys (Tiempo en acciónes de E/S)  %.10e s\n",  stime1 - stime0);
+	// printf("CPU/Wall   %.10f %% \n",100.0 * (utime1 - utime0 + stime1 - stime0) / (wtime1 - wtime0));
+	// printf("\n");
 	//******************************************************************
 
 	//Terminar programa normalmente	
@@ -133,8 +143,5 @@ void Insercion(TIPO * A, TIPO n)
 			j--;//Se decremnta el valor de j
 		}
 		A[j] = temp;//Asigna el valor tomado 
-	}
-
-    for(i = 0; i<n; i++)
-        printf("%d\n", A[i]);	
+	}	
 }
