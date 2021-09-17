@@ -77,7 +77,4 @@ void Seleccion(TIPO * A, TIPO n)
 		
 	}
 	
-	//imprimiendo el arreglo ordenado
-	for(i=0; i<n; i++)
-		printf("%d\n", A[i]);
 }
