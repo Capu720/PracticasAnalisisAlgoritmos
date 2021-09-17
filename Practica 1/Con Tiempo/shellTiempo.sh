@@ -20,3 +20,4 @@ gcc ShellTiempo.c tiempo.c -o shell
 ./shell 8000000 < numeros10millones.txt >> shellTiempo.txt
 ./shell 9000000 < numeros10millones.txt >> shellTiempo.txt
 ./shell 10000000 < numeros10millones.txt >> shellTiempo.txt
+./shell 500000 < numeros10millones.txt >> shellTiempo.txt

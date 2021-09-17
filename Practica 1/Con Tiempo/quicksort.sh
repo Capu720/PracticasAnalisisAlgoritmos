@@ -20,3 +20,4 @@ gcc quicksort.c tiempo.c -o quick
 ./quick 8000000 < numeros10millones.txt >> quicksort.txt
 ./quick 9000000 < numeros10millones.txt >> quicksort.txt
 ./quick 10000000 < numeros10millones.txt >> quicksort.txt
+./quick 500000 < numeros10millones.txt >> quicksort.txt
