@@ -20,3 +20,4 @@ gcc ABBTiempo.c tiempo.c -o abb
 ./abb 8000000 < numeros10millones.txt >> ABBTiempo.txt
 ./abb 9000000 < numeros10millones.txt >> ABBTiempo.txt
 ./abb 10000000 < numeros10millones.txt >> ABBTiempo.txt
+./abb 500000 < numeros10millones.txt >> ABBTiempo.txt

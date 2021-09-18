@@ -151,11 +151,10 @@ int main (int argc, char* argv[])
     free(numeros);
 	
 	//Cálculo del tiempo de ejecución del programa
-	printf("\n");
 	/*Se imprime el caso de pruba*/
 	if(n==100)
-		printf("\tReal\t user\t sys(E/S)\t CPU/wall\n");
-    printf("n = %d\t", n);
+		printf("N\tReal\t user\t sys(E/S)\t CPU/wall\n");
+    printf("%d\t", n);
 	printf("%.10e\t",  wtime1 - wtime0);
 	printf("%.10e\t",  utime1 - utime0);
 	printf("%.10e\t",  stime1 - stime0);

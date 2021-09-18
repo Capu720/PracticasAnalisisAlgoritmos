@@ -20,3 +20,4 @@ gcc mergesort.c tiempo.c -o merge
 ./merge 8000000 < numeros10millones.txt >> mergesort.txt
 ./merge 9000000 < numeros10millones.txt >> mergesort.txt
 ./merge 10000000 < numeros10millones.txt >> mergesort.txt
+./merge 500000 < numeros10millones.txt >> mergesort.txt

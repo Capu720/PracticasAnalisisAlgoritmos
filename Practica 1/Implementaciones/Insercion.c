@@ -69,10 +69,6 @@ void Insercion(TIPO * A, TIPO n)
 		A[j] = temp;//Asigna el valor tomado 
 	}
 	
-	//imprimiendo el arreglo ordenado
-	for(i=0; i<n; i++)
-		printf("%d\n", A[i]);
-	
 }
 
 
