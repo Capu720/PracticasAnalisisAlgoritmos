@@ -2,10 +2,10 @@
 #include<stdlib.h>
 
 /*
- * Titulo: Practica 1, algoritmo "Ordenamiento por ABB"
- * Descripción: implementacion del algoritmo ABB
+ * Titulo: Practica 1, algoritmo "Ordenamiento por Shell"
+ * Descripcion: implementacion del algoritmo Shell
  * Fecha: 13-sep-2021
- * Versión: 1
+ * Version: 1
 */
 
 #define TIPO int     /*tipo de datos que se ingresaran*/
@@ -14,11 +14,11 @@
 #define BANDERA int  /*bandera de estado de algoritmo*/
 
 /*
- * Función: Se realiza el ordenamiento de un arreglo por el metodo de algoritmo Shell
+ * Funcion: Se realiza el ordenamiento de un arreglo por el metodo de algoritmo Shell
  * Descripcion: Se realiza el ordenamiento del arreglo de longitud "n" con el algoritmo Shell, el cual consiste en la creacion de sub-arreglos de tamaño k = n/2. Se realiza la comparacion de los elementos de cada sub-arreglo, si el sub arreglo con posicion mas cercano al valor n es menor que el elemento mas cercano al 0, se realiza un intercambio de valores. Una vez ordenado el sub-arreglo, se divide k entre 2 nuevamente. El proceso se realiza hasta que k <= 1.
  * Recibe:
  *  - Arreglo de tipo entero
- *  - Valor entero del tamaño del arreglo
+ *  - Valor entero del tamano del arreglo
  * Regresa:
  *  - void
  * Errores: ninguno

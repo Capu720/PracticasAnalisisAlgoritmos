@@ -3,7 +3,7 @@
 
 /*
  * Titulo: Practica 1, algoritmo "Ordenamiento por ABB"
- * Descripción: implementacion del algoritmo ABB
+ * Descripcion: implementacion del algoritmo ABB
  * Fecha: 13-sep-2021
  * Versión: 1
 */
@@ -16,8 +16,8 @@
 * Se define la estructura Nodo para la construcción del ABB
 * La estructura tiene como elementos:
 * - Variable "dato" de tipo int que almacena el valor numerico del nodo
-* - Apuntador a estructura Nodo "izq" que indica si el nodo tiene ramificación a la izquierda
-* - Apuntador a estructura Nodo "der" que indica si el nodo tiene ramificación a la derecha
+* - Apuntador a estructura Nodo "izq" que indica si el nodo tiene ramificacion a la izquierda
+* - Apuntador a estructura Nodo "der" que indica si el nodo tiene ramificacion a la derecha
 */
 
 typedef struct Nodo
@@ -29,7 +29,7 @@ typedef struct Nodo
 typedef nodo *apnodo; /*Apuntador a estructura nodo*/
 
 /*
- * Función: Realiza la insercion de un valor entero a la estructura del Arbol Binario de Busqueda de manera recursiva
+ * Funcion: Realiza la insercion de un valor entero a la estructura del Arbol Binario de Busqueda de manera recursiva
  * Descripcion: Se realiza la insercion de un nodo al ABB, si la raiz actual es igual a NULL se agrega un nuevo nodo con el valor recibido por la funcion. Si la raiz no es NULL se compara el valor del nodo raiz con el valor recibido por la funcion, si el valor recibido es menor o igual que el valor del nodo raiz, se invoca a la misma misma funcion pasando como parametro un apuntador al nodo izquierdo de la raiz; en caso contrario se llama a la misma funcion pasando como parametro un apuntador al nodo derecho de la raiz. El algoritmo se ejecuta de manera recursiva hasta lograr la insercion.
  * Recibe:
  *  - Apuntador a apnodo
@@ -42,7 +42,7 @@ typedef nodo *apnodo; /*Apuntador a estructura nodo*/
 void Insertar(apnodo *arbol, TIPO dato);
 
 /*
- * Función: Realiza un recorrido InOrden del ABB para almacenar los datos ordenados en un arreglo
+ * Funcion: Realiza un recorrido InOrden del ABB para almacenar los datos ordenados en un arreglo
  * Descripcion: Realiza de manera recursiva para cada nodo en el ABB los siguientes pasos:
  *  - Atraviesa el sub-arbol izquierdo
  *  - Almacena el valor del nodo actual y aumenta la variable global k
