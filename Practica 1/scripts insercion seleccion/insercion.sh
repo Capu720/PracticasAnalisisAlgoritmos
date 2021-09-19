@@ -1,3 +1,3 @@
 #!/bin/bash
 gcc Insercion.c -o insercion
-./insercion 2500 < 2500num.txt > salins.txt
+./insercion 10000000 > resultado.txt < numeros10millones.txt
