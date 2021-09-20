@@ -46,6 +46,7 @@ Version 1.0
 La siguiente funcion realiza un ordenamiento por el metodo de insercion
 Recibe como parametros un arrego y el tamaÃ±o del arreglo
 La funcion es de tipo void, por lo tanto no devuelve ningun valor
+Esta función no causa errores
 */
 void Insercion(TIPO * A, TIPO n)
 {

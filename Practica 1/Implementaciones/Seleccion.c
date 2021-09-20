@@ -49,6 +49,7 @@ Busca l minimo elemento entre una posicion k y el final del areglo e intercambia
 posicion k
 Recibe como parametros un arrego y el tamaño del arreglo
 La funcion es de tipo void, por lo tanto no devuelve ningun valor
+Esta funcion no causa errores
 */
 void Seleccion(TIPO * A, TIPO n)
 {
