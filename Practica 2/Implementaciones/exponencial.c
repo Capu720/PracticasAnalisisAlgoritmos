@@ -1,10 +1,14 @@
 #include<stdio.h>
 #include<math.h>
-#inlude<stdlib.h>
+#include<stdlib.h>
+#define min 
+
+//Esqueleto de la funcion
+int BusquedaExponencial(int *, int , int);
 
 int main(int argc, char const *argv[])
 {
-
+	int n,i;
 	/*Verifica que se ingrese la longitud n de numeros*/
     if (argc != 2)
     {
@@ -14,8 +18,12 @@ int main(int argc, char const *argv[])
     /*convierte la cadena a numero*/
     n = atoi(argv[1]);
     
-    int A* = (int *)malloc(sizeof(int) * n);
+    int *A = (int *)malloc(sizeof(int) * n);
     int num = 8;
+    
+    //Metiendo numeros al arreglo
+    for(i = 0; i < n; i++)
+    	scanf("%d", &A[i]);
     
     int bandera = BusquedaExponencial(A,n,num);
     
@@ -50,8 +58,8 @@ int BusquedaExponencial(int *A, int n, int num)
 	/*Una vez encontrado el rango en donde esta el numero, se realiza una busqueda de forma binaria*/
 	
 	/*Declaramos los primeros valores de los rangos*/
-	int low = i/2;
-	int high = min(i, n-1);
+	int low = pos/2;
+	int high = min(pos, n-1);
 	
 	while(low <= high)
 	{
