@@ -1,3 +1,10 @@
+/*
+* Titulo: Practica 2, algoritmo "Busqueda Binaria"
+* Descripcion: Implementacion del algoritmo de busqueda binaria
+* Fecha: 27-sep-2021
+* Version: 1.0
+*/
+
 #include<stdio.h>
 #include<math.h>
 #include<stdlib.h>
@@ -8,31 +15,36 @@ int BusquedaExponencial(int *, int , int);
 
 int main(int argc, char const *argv[])
 {
-	int n=11,i;
-	/*Verifica que se ingrese la longitud n de numeros
+	int n,i, bandera,num;
+	//Verifica que se ingrese la longitud n de numeros
     if (argc != 2)
     {
         printf("Ingrese n");
         exit(EXIT_FAILURE);
     }
-    /*convierte la cadena a numero
-    n = atoi(argv[1]);*/
+    //convierte la cadena a numero
+    n = atoi(argv[1]);
     
-    int *A = (int *)malloc(sizeof(int) * 11);
-    int num = 5;
-    
+    int *A = (int *)malloc(sizeof(int) * n);
+    int x[] = { 322486, 14700764,   3128036,    3128036,    6337399,
+                61396,  10393545,   2147445644, 1295390003, 450057883,
+                187645041,  1980098116, 152503, 5000, 1493283650, 
+                214826, 1843349527, 1360839354, 2109248666, 2147470852, 0};
     //Metiendo numeros al arreglo
     for(i = 0; i < n; i++)
-    	//scanf("%d", &A[i]);
-    	A[i] = i+1;
-    	
-    int bandera = BusquedaExponencial(A,n,num);
+    	scanf("%d", &A[i]);
+    	//A[i] = i+1;
     
-    if(bandera != -1)
-    	printf("\nNumero encontrado en la posicion: %d", bandera);
-    else
-    	printf("\nNumero NO encontrado en el arreglo");
+	for(i = 0; i<21; i++)
+	{
+		num = x[i];
+		bandera = BusquedaExponencial(A,n,num);
     
+		if(bandera != -1)
+    		printf("\nNumero:%d\t encontrado en la posicion: %d",num, bandera);
+    	else
+			printf("\nNumero:%d\t NO encontrado en el arreglo", num);
+	}  
 	return 0;	
 }
 
