@@ -1,6 +1,6 @@
 /*
 * Titulo: Practica 2, algoritmo "Busqueda Binaria"
-* Descripcion: Implementacion del algoritmo de busqueda binaria
+* Descripcion: Implementacion del algoritmo de busqueda exponencial con hilos
 * Fecha: 27-sep-2021
 * Version: 1.0
 */
@@ -8,6 +8,8 @@
 #include<stdio.h>
 #include<math.h>
 #include<stdlib.h>
+#include<time.h>
+#include <unistd.h>
 #define min 
 
 //Esqueleto de la funcion
@@ -15,28 +17,34 @@
 void BusquedaExponencial(int *, int , int);
 void* Busqueda(void *);
 
-int numHilos = 10;
-int low, high, num = 345,n,aux, bandhilos =0, auxhil = 0;
+int numHilos = 11;
+int l, h, num = 434,n=500,aux, bandhilos =0, auxhil = 0, posi_hilo=-1;
 int* A;
+int* rango_inf;
+int* rango_sup;
 
-int main(int argc, char const *argv[])
+int main()
 {
 	int i;
-	//Verifica que se ingrese la longitud n de numeros
+
+	/*//Verifica que se ingrese la longitud n de numeros
     if (argc != 2)
     {
         printf("Ingrese n");
         exit(EXIT_FAILURE);
     }
     //convierte la cadena a numero
-    n = atoi(argv[1]);
+    n = atoi(argv[1]);*/
     
     A = (int *)malloc(sizeof(int) * n);
-    int x[] = { 322486, 14700764,   3128036,    3128036,    6337399,
+	rango_inf = (int *)malloc(sizeof(int) * numHilos);
+	rango_sup = (int *)malloc(sizeof(int) * numHilos);
+    /*int x[] = { 322486, 14700764,   3128036,    3128036,    6337399,
                 61396,  10393545,   2147445644, 1295390003, 450057883,
                 187645041,  1980098116, 152503, 5000, 1493283650, 
                 214826, 1843349527, 1360839354, 2109248666, 2147470852, 0};
-    //Metiendo numeros al arreglo
+    */
+   	//Metiendo numeros al arreglo
     for(i = 0; i < n; i++)
     	A[i] = i;
 
@@ -44,7 +52,6 @@ int main(int argc, char const *argv[])
 	La idea basica es pasarle un rango del arreglo a cada uno de los arreglos
 	asi el primero que lo encuentre sera una especie mas rapida
 	*/
-	
 	BusquedaExponencial(A,n,num);
 	printf("\n\n");
 }
@@ -77,27 +84,36 @@ void BusquedaExponencial(int *A, int n, int num)
 	//int low1 = pos/2;
 	int high1 = min(pos, n-1);
 	int division = high1/numHilos;
+	int j=0,h=0;
 	
-	for (int i=1; i<numHilos; i++) 
-	{
-		//Se crean los rangos para cada uno de los hilos
-		if(i == 0){
-            low = pos/2;
-            high = low + division - 1;
-            i++;
+	//Definimos los rangos para cada hilo
+	while(h < high1){
+		
+		if(j == 0){
+			l = pos/2;
+            h = l + division - 1;
         }
             
         else{
-            aux = high;
-            low = high + 1;
-            high = aux + division;
+            aux = h;
+            l = h + 1;
+            h = aux + division;
         }
-
+		rango_inf[j] = l;
+		rango_sup[j] = h;
+		j++;
+		
+    }
+	
+	for (int i=1; i<numHilos; i++) 
+	{      
 		if (pthread_create (&thread[i], NULL, Busqueda,(void*)i) != 0 ) 
 		{
 			perror("El thread no  pudo crearse");
 			exit(-1);
 		}
+		pthread_join(thread[i], NULL);
+		posi_hilo++;
 	}
 	
 }
@@ -106,6 +122,8 @@ void* Busqueda(void* id){
 	
 	int n_thread=(int)id;
 	int pos,band = 0;
+	int high = rango_sup[posi_hilo];
+	int low = rango_inf[posi_hilo];
 
 	printf("\n\tSoy el thread %d\tMe toco el rango de buesqueda %d - %d",n_thread,low,high);
 
@@ -114,28 +132,30 @@ void* Busqueda(void* id){
 
 	else
 	{
-		while(low <= high)
-		{	
-			pos = low + (high-low)/2;
-			
-			if(A[pos] == num){// Si encontramos el numero en la posicion del arreglo, regresamos la posicion
-				printf("\n\tSoy el thread %d\t y encontre el numero %d en la posicion %d",n_thread,num,pos);
-				band = 1;
-				bandhilos = 1;
-				auxhil = n_thread;
-				break;
-			} 
+		if(high < n && low < n)
+		{
+			while(low <= high)
+			{	
+				pos = low + (high-low)/2;
 				
-			else if(A[pos] < num)//Comparamos si el numero en la posicion en el arrego es menor al numero, e incrementar el rango menor
-				low = pos + 1;
-			
-			else
-				high = pos - 1;//Si no se cumple lo anterior, se decrementa el rango mayor
+				if(A[pos] == num){// Si encontramos el numero en la posicion del arreglo, regresamos la posicion
+					printf("\n\tSoy el thread %d\t y encontre el numero %d en la posicion %d",n_thread,num,pos);
+					band = 1;
+					bandhilos = 1;
+					auxhil = n_thread;
+					break;
+				} 
+					
+				else if(A[pos] < num)//Comparamos si el numero en la posicion en el arrego es menor al numero, e incrementar el rango menor
+					low = pos + 1;
+				
+				else
+					high = pos - 1;//Si no se cumple lo anterior, se decrementa el rango mayor
+			}
+			if(band == 0)
+				printf("\n\tSoy el thread %d\t y no encontre el numero %d",n_thread, num);
 		}
-		if(band == 0)
-			printf("\n\tSoy el thread %d\t y no encontre el numero %d",n_thread, num);
-	}
-	
+	}	
 	printf("\n\tSoy el thread %d\t y me despido perros",n_thread);
 	
 }
