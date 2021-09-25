@@ -8,23 +8,24 @@ int BusquedaExponencial(int *, int , int);
 
 int main(int argc, char const *argv[])
 {
-	int n,i;
-	/*Verifica que se ingrese la longitud n de numeros*/
+	int n=11,i;
+	/*Verifica que se ingrese la longitud n de numeros
     if (argc != 2)
     {
         printf("Ingrese n");
         exit(EXIT_FAILURE);
     }
-    /*convierte la cadena a numero*/
-    n = atoi(argv[1]);
+    /*convierte la cadena a numero
+    n = atoi(argv[1]);*/
     
-    int *A = (int *)malloc(sizeof(int) * n);
-    int num = 8;
+    int *A = (int *)malloc(sizeof(int) * 11);
+    int num = 5;
     
     //Metiendo numeros al arreglo
     for(i = 0; i < n; i++)
-    	scanf("%d", &A[i]);
-    
+    	//scanf("%d", &A[i]);
+    	A[i] = i+1;
+    	
     int bandera = BusquedaExponencial(A,n,num);
     
     if(bandera != -1)
