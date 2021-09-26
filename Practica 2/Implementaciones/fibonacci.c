@@ -1,19 +1,61 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#define min
 
 #define TIPO int     /*tipo de datos que se ingresaran*/
 #define FORMATO "%d" /*formato de datos que se ingresaran*/
 #define POSICION int /*Significado del los nombres primero, medio y final*/
 
-#define ESTA(pos) (pos != -1)
+#define ESTA(pos) (pos != -1)/*verifica si existe la posicion*/
+#define min
 /**
  * Titulo: Practica 2, algoritmo "Busqueda de Fibonacci"
  * Descripción: implementacion del algoritmo de busqueda de Fibonacci
  * Fecha: 27-sep-2021
  * Versión: 1
 */
+/**
+ * Función:realiza la busqueda de Fibonacci
+ * Descripcion: parecido a la busqueda binaria, busqueda de fibonacci, va comparando con porciones en terminos de la serie de fibonacci.
+ * Recibe: 
+ *  - arreglo de numeros
+ *  - el numero a buscar
+ *  - longitud del arreglo
+ * Regresa:
+ *  - posicion del numero encontrado (o no)
+ * Errores: ninguno
+*/
+POSICION fibMonaccianSearch(TIPO arr[], TIPO buscar, TIPO n);
+
+int main(int argc, char const *argv[])
+{
+    TIPO n, buscar, *numeros;
+    POSICION i, pos;
+    /*Verifica que se ingrese la longitud n de numeros*/
+    if (argc != 3)
+    {
+        printf("Falto escribir el valor de n y el numero a busar");
+        exit(EXIT_FAILURE);
+    }
+    /*convierte la cadena a numero*/
+    n = atoi(argv[1]);
+    buscar = atoi(argv[2]);
+    /*Solicita memoria con la funcion malloc, en caso de fracaso, regresará error*/
+    if ((numeros = malloc(sizeof(TIPO) * n)) == NULL)
+        perror("No se pudo solicitar memoria para el arreglo");
+    /*lee numero por numero de un archivo*/
+    for (i = 0; i < n; i++)
+        scanf(FORMATO, &numeros[i]);
+
+    /*se llama a la función*/
+    pos = fibMonaccianSearch(numeros, buscar, n);
+
+    /*se verifica si se encontro el numero*/
+    ESTA(pos) ? printf("Se encuentra en la posicion: %d\n", pos) : printf("no se encuentra");
+    /*se libera la memoria*/
+    free(numeros);
+    return EXIT_SUCCESS;
+}
 /**
  * Función:realiza la busqueda de Fibonacci
  * Descripcion: parecido a la busqueda binaria, busqueda de fibonacci, va comparando con porciones en terminos de la serie de fibonacci.
@@ -80,34 +122,4 @@ POSICION fibMonaccianSearch(TIPO arr[], TIPO buscar, TIPO n)
 
     /*como no lo encontró, regresa -1 */
     return -1;
-}
-
-int main(int argc, char const *argv[])
-{
-    TIPO n, buscar, *numeros;
-    POSICION i, pos;
-    /*Verifica que se ingrese la longitud n de numeros*/
-    if (argc != 3)
-    {
-        printf("Falto escribir el valor de n y el numero a busar");
-        exit(EXIT_FAILURE);
-    }
-    /*convierte la cadena a numero*/
-    n = atoi(argv[1]);
-    buscar = atoi(argv[2]);
-    /*Solicita memoria con la funcion malloc, en caso de fracaso, regresará error*/
-    if ((numeros = malloc(sizeof(TIPO) * n)) == NULL)
-        perror("No se pudo solicitar memoria para el arreglo");
-    /*lee numero por numero de un archivo*/
-    for (i = 0; i < n; i++)
-        scanf(FORMATO, &numeros[i]);
-
-    /*se llama a la función*/
-    pos = fibMonaccianSearch(numeros, buscar, n);
-
-    /*se verifica si se encontro el numero*/
-    ESTA(pos) ? printf("Se encuentra en la posicion: %d\n", pos) : printf("no se encuentra");
-    /*se libera la memoria*/
-    free(numeros);
-    return EXIT_SUCCESS;
 }
