@@ -51,14 +51,14 @@ int main(int argc, char* argv[]){
 */
 int busquedaBinaria(int arr[], int l, int r, int x){
     while (l <= r) {
-        int m = l + (r - l) / 2;
+        int m = l + (r - l) / 2;//Dvide el arreglo a la mitad
         // Revisa si x esta en la mitad
         if (arr[m] == x)
             return m;
-        // Si x es mayor, ignora la mitad izquierda
+        // Si x es mayor, se va por la derecha
         if (arr[m] < x)
             l = m + 1;
-        // Si x es menor, ignora la mitad derecha
+        // Si x es menor, se va por la izquierda
         else
             r = m - 1;
     }
