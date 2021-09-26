@@ -104,7 +104,7 @@ int main (int argc, char* argv[])
 	if(n==1000000)
 		printf("N\tTiempo promedio\n");
     printf("%d\t", n);
-	printf("%.10e\t", sumwtime/xn);
+	printf("%.10e\t", (double)sumwtime/xn);
 	
 	//******************************************************************
 
