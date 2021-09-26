@@ -15,6 +15,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include "tiempo.h"
+#include <math.h>
+#define min
 //*****************************************************************
 //DEFINICION DE CONSTANTES DEL PROGRAMA
 //*****************************************************************

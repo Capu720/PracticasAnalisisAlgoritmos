@@ -1,6 +1,7 @@
 #include <stdio.h>
-#include <windows.h> //si se usa en windows
 #include <stdlib.h>
+#include <math.h>
+#define min
 
 #define TIPO int     /*tipo de datos que se ingresaran*/
 #define FORMATO "%d" /*formato de datos que se ingresaran*/
