@@ -17,8 +17,6 @@ else
 fi
 done
 
-echo \n >> salida.txt
-
 for i in ${n[@]}
 do
 ./ABB.o $i < numeros10millones.txt >> salida.txt

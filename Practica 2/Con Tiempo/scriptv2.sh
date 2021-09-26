@@ -7,31 +7,31 @@ gcc fibonacci.c tiempo.c -o fibonacci.o
 
 n=(1000000 2000000 3000000 4000000 5000000 6000000 7000000 8000000 9000000 10000000)
 
-echo \Lineal > salida.txt
+echo -e "Lineal" > salida.txt
 for i in ${n[@]}
 do
 ./lineal.o $i < numeros10millones.txt >> salida.txt
 done
 
-echo \ABB >> salida.txt
+echo -e "\nABB" >> salida.txt
 for i in ${n[@]}
 do
 ./ABB.o $i < numeros10millones.txt >> salida.txt
 done
 
-echo \Binaria >> salida.txt
+echo -e "\nBinaria" >> salida.txt
 for i in ${n[@]}
 do
 ./binaria.o $i < 10millones.txt >> salida.txt
 done
 
-echo \Exponencial >> salida.txt
+echo -e "\nExponencial" >> salida.txt
 for i in ${n[@]}
 do
 ./exponencial.o $i < 10millones.txt >> salida.txt
 done
 
-echo \Fibonacci >> salida.txt
+echo -e "\nFibonacci" >> salida.txt
 for i in ${n[@]}
 do
 ./fibonacci.o $i < 10millones.txt >> salida.txt
