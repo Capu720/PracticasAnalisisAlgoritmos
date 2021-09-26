@@ -31,7 +31,7 @@
 *Regresa: int
 *Errores: Ninguno
 */
-int busquedaLineal(int arr[], int n, int x);/*Prototipo de la funcion*/
+int busquedaBinaria(int arr[], int l, int r, int x);/*Prototipo de la funcion*/
 
 //*****************************************************************
 //VARIABLES GLOBALES
@@ -88,7 +88,7 @@ int main (int argc, char* argv[])
 	//******************************************************************	
 	//Algoritmo
 	//******************************************************************	
-	busquedaLineal(A, n, x[i]);
+	int result = busquedaBinaria(A, 0, n - 1, x[i]);
 	//******************************************************************
 
 	//******************************************************************	
@@ -117,15 +117,23 @@ int main (int argc, char* argv[])
 //DEFINICIÓN DE FUNCIONES 
 //************************************************************************
 /*
-*Recibe: Un areglo, el tamanio y el elemento a buscar
+*Recibe: Un arreglo, posicion de inicio, posicion final y el elemento a buscar
 *Regresa: int
 *Errores: Ninguno
 */
-int busquedaLineal(int arr[], int n, int x)
-{
-    int i;//Declara el indice
-    for (i = 0; i < n; i++)//Recorre el arreglo
-        if (arr[i] == x)//Compara el elemento buscado con el de la posicion i
-            return i;//Regresa la posicion donde se encuentra
-    return -1;//Regresa -1 si no lo encuentra
+int busquedaBinaria(int arr[], int l, int r, int x){
+    while (l <= r) {
+        int m = l + (r - l) / 2;//Dvide el arreglo a la mitad
+        // Revisa si x esta en la mitad
+        if (arr[m] == x)
+            return m;
+        // Si x es mayor, se va por la derecha
+        if (arr[m] < x)
+            l = m + 1;
+        // Si x es menor, se va por la izquierda
+        else
+            r = m - 1;
+    }
+    // Si el elemento no se encuentra regresa -1
+    return -1;
 }
