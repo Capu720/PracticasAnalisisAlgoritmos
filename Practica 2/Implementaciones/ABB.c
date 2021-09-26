@@ -1,5 +1,5 @@
-#include<stdio.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 /*
  * Titulo: Practica 2, algoritmo "Busqueda en ABB"
@@ -9,7 +9,7 @@
  * Versión: 1
 */
 
-#define TIPO int     /*tipo de datos que se ingresaran*/
+#define TIPO int	 /*tipo de datos que se ingresaran*/
 #define FORMATO "%d" /*formato de datos que se ingresaran*/
 #define POSICION int /*posicion en arreglo*/
 
@@ -23,16 +23,16 @@
 
 typedef struct Nodo
 {
-    int dato;
-    struct Nodo *izq, *der;
-}nodo;
+	int dato;
+	struct Nodo *izq, *der;
+} nodo;
 
 typedef nodo *apnodo; /*Apuntador a estructura nodo*/
 
 void Insertar(apnodo *arbol, TIPO dato);
 int Buscar(apnodo arbol, TIPO dato);
 
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
 	TIPO n, dato;
 
@@ -44,34 +44,34 @@ int main(int argc, char* argv[])
 	}
 	else
 	{
-        	/*convierte la cadenas a numeros*/
+		/*convierte la cadenas a numeros*/
 		n = atoi(argv[1]);
-		dato = atoi(argv[2]); 
+		dato = atoi(argv[2]);
 	}
 
 	/*Solicita memoria al sistema con la funcion malloc*/
 	TIPO *numeros;
 	numeros = malloc(n * sizeof(TIPO));
 
-    	/*Lee y almacena los n numeros en el arreglo creado*/
-	for(int i = 0; i < n; i++)
-		scanf(FORMATO,&numeros[i]);
+	/*Lee y almacena los n numeros en el arreglo creado*/
+	for (int i = 0; i < n; i++)
+		scanf(FORMATO, &numeros[i]);
 
-    	/*Se crea un apuntador de tipo nodo para ser la raiz inicial del ABB*/
-    	apnodo arbol = NULL;
+	/*Se crea un apuntador de tipo nodo para ser la raiz inicial del ABB*/
+	apnodo arbol = NULL;
 
-    	/*Se insertan los n numeros en el ABB*/
-	for(int i = 0; i < n; i++)
-		Insertar(&arbol,numeros[i]);
-	
+	/*Se insertan los n numeros en el ABB*/
+	for (int i = 0; i < n; i++)
+		Insertar(&arbol, numeros[i]);
+
 	/*Se realiza la funcion de busqueda en el ABB*/
-	if(Buscar(arbol,dato))
-		printf("\nSe encontro el dato: %d",dato);
+	if (Buscar(arbol, dato))
+		printf("\nSe encontro el dato: %d", dato);
 	else
-		printf("\nNo se encontro el dato: %d",dato);
+		printf("\nNo se encontro el dato: %d", dato);
 
-    	/*Se libera la memoria*/
-    	free(numeros);
+	/*Se libera la memoria*/
+	free(numeros);
 	return 0;
 }
 
@@ -94,10 +94,10 @@ void Insertar(apnodo *arbol, TIPO dato)
 	n->der = NULL;
 
 	/*Se verifica si el apuntador a nodo es igual a NULL*/
-	if(*arbol == NULL)
+	if (*arbol == NULL)
 	{
 		/*Al ser NULL se asigna el nuevo nodo al arbol recibido*/
-		*arbol = n;	
+		*arbol = n;
 	}
 	else
 	{
@@ -108,13 +108,13 @@ void Insertar(apnodo *arbol, TIPO dato)
 		apnodo anterior = NULL;
 
 		/*Se ejecuta un ciclo mientras que el apuntador temporal sea diferente de NULL*/
-		while(temp != NULL)
+		while (temp != NULL)
 		{
 			/*Se guarda la posicion actual del apuntador temporal antes de ser actualizado*/
 			anterior = temp;
-			
+
 			/*Se compara el valor del nodo actual con el dato recibido*/
-			if(dato < temp->dato)
+			if (dato < temp->dato)
 				/*Si el dato recibido es menor que el del nodo actual
 				 * se actualiza el apuntador temporal al apuntador izquierdo del nodo*/
 				temp = temp->izq;
@@ -123,9 +123,9 @@ void Insertar(apnodo *arbol, TIPO dato)
 				 * se actualiza el apuntador temporal al apuntador derecho del nodo*/
 				temp = temp->der;
 		}
-		
+
 		/*Se compara el dato de la posicion anterior con el dato recibido*/
-		if(dato <= anterior->dato)
+		if (dato <= anterior->dato)
 			/*Si el dato recibido es menor o igual que el del nodo actual
 			 * se asigna el nuevo nodo en la posicion izquierda de la raiz actual*/
 			anterior->izq = n;
@@ -150,21 +150,21 @@ void Insertar(apnodo *arbol, TIPO dato)
 */
 int Buscar(apnodo arbol, TIPO dato)
 {
-    	/*Se ejecuta un ciclo mientras que el apuntador arbol sea diferente de NULL
-     	y el valor del nodo sea distinto al dato buscado*/
-	while(arbol != NULL && arbol->dato != dato)
-    	{
-        	/*Se compara el valor del nodo actual con el dato recibido*/
-        	if(dato < arbol->dato)
-                /*Si el dato recibido es menor que el del nodo actual
-                * se actualiza el apuntador arbol al apuntador izquierdo del nodo*/
-        		arbol = arbol->izq;
-        	else
-                /*Si el dato recibido es mayor que el del nodo actual
+	/*Se ejecuta un ciclo mientras que el apuntador arbol sea diferente de NULL
+    y el valor del nodo sea distinto al dato buscado*/
+	while (arbol != NULL && arbol->dato != dato)
+	{
+		/*Se compara el valor del nodo actual con el dato recibido*/
+		if (dato < arbol->dato)
+			/*Si el dato recibido es menor que el del nodo actual
+            * se actualiza el apuntador arbol al apuntador izquierdo del nodo*/
+			arbol = arbol->izq;
+		else
+			/*Si el dato recibido es mayor que el del nodo actual
                 * se actualiza el apuntador arbol al apuntador derecho del nodo*/
-                	arbol = arbol->der;
-    	}
-    	/*Se retorna el valor obtenido del condicional. Se retorna 1 si el arbol no
-         es NULL y 1 en caso contrario*/
-    	return arbol != NULL;
+			arbol = arbol->der;
+	}
+	/*Se retorna el valor obtenido del condicional. Se retorna 1 si el arbol no
+    es NULL y 1 en caso contrario*/
+	return arbol != NULL;
 }

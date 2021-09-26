@@ -6,7 +6,7 @@
 #define FORMATO "%d" /*formato de datos que se ingresaran*/
 #define POSICION int /*Significado del los nombres primero, medio y final*/
 
-#define ESTA(pos)  (pos!=-1)
+#define ESTA(pos) (pos != -1)
 /**
  * Titulo: Practica 2, algoritmo "Busqueda de Fibonacci"
  * Descripción: implementacion del algoritmo de busqueda de Fibonacci
@@ -72,7 +72,8 @@ POSICION fibMonaccianSearch(TIPO arr[], TIPO buscar, TIPO n)
     }
 
     /* compara el ultimo numero con buscar */
-    if (fibM1 && arr[inicio + 1] == buscar){
+    if (fibM1 && arr[inicio + 1] == buscar)
+    {
         return inicio + 1;
     }
 
@@ -82,7 +83,7 @@ POSICION fibMonaccianSearch(TIPO arr[], TIPO buscar, TIPO n)
 
 int main(int argc, char const *argv[])
 {
-    TIPO n,buscar, *numeros;
+    TIPO n, buscar, *numeros;
     POSICION i, pos;
     /*Verifica que se ingrese la longitud n de numeros*/
     if (argc != 3)
@@ -101,10 +102,10 @@ int main(int argc, char const *argv[])
         scanf(FORMATO, &numeros[i]);
 
     /*se llama a la función*/
-    pos=fibMonaccianSearch(numeros,buscar,n);
+    pos = fibMonaccianSearch(numeros, buscar, n);
 
     /*se verifica si se encontro el numero*/
-    ESTA(pos) ? printf("Se encuentra en la posicion: %d\n",pos): printf("no se encuentra");
+    ESTA(pos) ? printf("Se encuentra en la posicion: %d\n", pos) : printf("no se encuentra");
     /*se libera la memoria*/
     free(numeros);
     return EXIT_SUCCESS;
