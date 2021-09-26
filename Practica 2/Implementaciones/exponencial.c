@@ -52,6 +52,8 @@ int main(int argc, char const *argv[])
 /*Funcion de busqueda eponencial
 Recibe como parametros un arreglo, el tamanio del arreglo, y el numero a buscar
 La siguiente funcion realiza de forma iterativa el algoritmo de busqueda exponencial
+Regresa como valor la posicion donde se encuentra el elemento, o un -1 si no lo encunetra
+NO presenta errores
 */
 
 int BusquedaExponencial(int *A, int n, int num)
