@@ -88,6 +88,6 @@ int BusquedaExponencial(int *A, int n, int num)
 			high = pos - 1;//Si no se cumple lo anterior, se decrementa el rango mayor
 	}
 	
-	return -1;
+	return -1;//Si no esta regresa -1
 	
 }

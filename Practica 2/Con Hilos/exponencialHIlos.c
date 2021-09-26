@@ -104,7 +104,7 @@ void BusquedaExponencial(int *A, int n, int num)
 		j++;
 		
     }
-	
+
 	for (int i=1; i<numHilos; i++) 
 	{      
 		if (pthread_create (&thread[i], NULL, Busqueda,(void*)i) != 0 ) 
