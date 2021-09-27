@@ -114,7 +114,7 @@ int main (int argc, char* argv[])
 	//Algoritmo
 	//******************************************************************
 	/*Se realiza la funcion de busqueda en el ABB*/
-	if (Buscar(arbol, dato))
+	if (Buscar(arbol, x[i]))
 		printf("\nSe encontro el dato: %d", x[i]);
 	else
 		printf("\nNo se encontro el dato: %d", x[i]);
