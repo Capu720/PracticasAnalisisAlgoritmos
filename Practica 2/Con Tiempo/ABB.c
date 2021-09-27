@@ -101,7 +101,7 @@ int main (int argc, char* argv[])
 	apnodo arbol = NULL;    
 	/*Se insertan los n numeros en el ABB*/
 	for (int i = 0; i < n; i++)
-		Insertar(&arbol, numeros[i]);
+		Insertar(&arbol, A[i]);
 
     for (i = 0; i < xn; i++){//Cuenta el tiempo para cada busqueda
 	//******************************************************************
