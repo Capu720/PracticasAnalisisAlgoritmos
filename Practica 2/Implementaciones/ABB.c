@@ -36,39 +36,46 @@ int main(int argc, char *argv[])
 {
 	TIPO n, dato;
 
-	/*Verifica que se ingrese el tamano de n y el dato a buscar*/
-	if (argc < 3)
-	{
-		printf("\n Se debe de indicar el tamano de n y el dato a buscar");
-		exit(1);
-	}
-	else
-	{
-		/*convierte la cadenas a numeros*/
-		n = atoi(argv[1]);
-		dato = atoi(argv[2]);
-	}
+    /*Verifica que se ingrese el tamano de n y el dato a buscar*/
+    if (argc != 2)
+    {
+        printf("Ingrese n");
+        exit(EXIT_FAILURE);
+    }
+    //convierte la cadena a numero
+    n = atoi(argv[1]);
 
-	/*Solicita memoria al sistema con la funcion malloc*/
-	TIPO *numeros;
-	numeros = malloc(n * sizeof(TIPO));
+    int x[] = {	322486, 14700764, 3128036, 3128036, 6337399,
+        61396, 10393545, 2147445644, 1295390003, 450057883,
+        187645041, 1980098116, 152503, 5000, 1493283650,
+        214826, 1843349527, 1360839354, 2109248666, 2147470852, 0};
 
-	/*Lee y almacena los n numeros en el arreglo creado*/
-	for (int i = 0; i < n; i++)
-		scanf(FORMATO, &numeros[i]);
 
-	/*Se crea un apuntador de tipo nodo para ser la raiz inicial del ABB*/
-	apnodo arbol = NULL;
+        /*Solicita memoria al sistema con la funcion malloc*/
+        TIPO *numeros;
+        numeros = malloc(n * sizeof(TIPO));
 
-	/*Se insertan los n numeros en el ABB*/
-	for (int i = 0; i < n; i++)
-		Insertar(&arbol, numeros[i]);
+        /*Lee y almacena los n numeros en el arreglo creado*/
+        for (int i = 0; i < n; i++)
+            scanf(FORMATO, &numeros[i]);
 
-	/*Se realiza la funcion de busqueda en el ABB*/
-	if (Buscar(arbol, dato))
-		printf("\nSe encontro el dato: %d", dato);
-	else
-		printf("\nNo se encontro el dato: %d", dato);
+        /*Se crea un apuntador de tipo nodo para ser la raiz inicial del ABB*/
+        apnodo arbol = NULL;
+
+        /*Se insertan los n numeros en el ABB*/
+        for (int i = 0; i < n; i++)
+            Insertar(&arbol, numeros[i]);
+
+        for (int i = 0; i < 21; i++)
+        {
+            dato = x[i];
+
+            /*Se realiza la funcion de busqueda en el ABB*/
+            if (Buscar(arbol, dato))
+                printf("\nSe encontro el dato: %d", dato);
+            else
+                printf("\nNo se encontro el dato: %d", dato);
+        }
 
 	/*Se libera la memoria*/
 	free(numeros);
