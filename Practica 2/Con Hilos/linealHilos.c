@@ -46,7 +46,7 @@ int main(int argc, char *argv[]){
 
 void *busquedaLineal(void * arg){
     int i;
-    printf("%d %d %d ", n, x, pos);
+    //printf("%d %d %d ", n, x, pos);
     if(pos != -1)
         pthread_exit(NULL);
 
