@@ -29,17 +29,20 @@ POSICION fibMonaccianSearch(TIPO arr[], TIPO buscar, TIPO n);
 
 int main(int argc, char const *argv[])
 {
-    TIPO n, buscar, *numeros;
+    TIPO n, *numeros;
     POSICION i, pos;
     /*Verifica que se ingrese la longitud n de numeros*/
-    if (argc != 3)
+    if (argc != 2)
     {
-        printf("Falto escribir el valor de n y el numero a busar");
+        printf("Falto escribir el valor de n");
         exit(EXIT_FAILURE);
     }
     /*convierte la cadena a numero*/
     n = atoi(argv[1]);
-    buscar = atoi(argv[2]);
+    int buscar[] = {	322486, 14700764, 3128036, 3128036, 6337399,
+				61396, 10393545, 2147445644, 1295390003, 450057883,
+				187645041, 1980098116, 152503, 5000, 1493283650,
+				214826, 1843349527, 1360839354, 2109248666, 2147470852, 0};
     /*Solicita memoria con la funcion malloc, en caso de fracaso, regresará error*/
     if ((numeros = malloc(sizeof(TIPO) * n)) == NULL)
         perror("No se pudo solicitar memoria para el arreglo");
@@ -48,10 +51,17 @@ int main(int argc, char const *argv[])
         scanf(FORMATO, &numeros[i]);
 
     /*se llama a la función*/
-    pos = fibMonaccianSearch(numeros, buscar, n);
+       
+    
 
-    /*se verifica si se encontro el numero*/
+    for (i = 0; i < 21; i++)
+	{
+		
+		pos = fibMonaccianSearch(numeros, buscar[i],n);
+
+		/*se verifica si se encontro el numero*/
     ESTA(pos) ? printf("Se encuentra en la posicion: %d\n", pos) : printf("no se encuentra");
+	}
     /*se libera la memoria*/
     free(numeros);
     return EXIT_SUCCESS;
