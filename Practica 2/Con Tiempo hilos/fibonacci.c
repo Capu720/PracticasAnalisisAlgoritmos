@@ -11,14 +11,16 @@
  * Titulo: Practica 2, algoritmo "Busqueda de Fibonacci"
  * Descripción: implementacion del algoritmo de busqueda de Fibonacci
  * Fecha: 27-sep-2021
- * Versión: 2
+ * Versión: 4
 */
 //*****************************************************************
 //LIBRERIAS INCLUIDAS
 //*****************************************************************
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
+#include <pthread.h>
+#include <unistd.h>
+#include <math.h>
 #include "tiempo.h"
 //*****************************************************************
 //DEFINICION DE CONSTANTES DEL PROGRAMA
@@ -29,25 +31,34 @@
 
 #define ESTA(pos) (pos != -1)/*verifica si existe la posicion*/
 #define min(x,y)   ((x<=y) ? x:y)
+#define TAM 2
 //********************************************************************************
 //DECLARACION DE ESTRUCTURAS
 //********************************************************************************
-
+/*estructura de los parametros que se le envia a la funcion de cada hilo*/
+typedef struct 
+{
+      TIPO* arr;
+      TIPO buscar;
+      TIPO n;
+      TIPO* pos;
+}parametros;
 //*****************************************************************
 //DECLARACIÓN DE FUNCIONES
 //*****************************************************************
 /**
  * Función:realiza la busqueda de Fibonacci
  * Descripcion: parecido a la busqueda binaria, busqueda de fibonacci, va comparando con porciones en terminos de la serie de fibonacci.
- * Recibe: 
+ * Recibe: en forma de estructura
  *  - arreglo de numeros
  *  - el numero a buscar
  *  - longitud del arreglo
+ *  - posicion
  * Regresa:
- *  - posicion del numero encontrado (o no)
+ *  - void
  * Errores: ninguno
 */
-POSICION fibMonaccianSearch(TIPO arr[], TIPO buscar, TIPO n);
+void* fibMonaccianSearch(void* args);
 
 //*****************************************************************
 //VARIABLES GLOBALES
@@ -62,8 +73,12 @@ int main (int argc, char* argv[])
 	//Variables del main
 	//******************************************************************	
 	double sumwtime, utime0, stime0, wtime0,utime1, stime1, wtime1; //Variables para medición de tiempos
-	int n; 	//n determina el tamaño del algorito dado por argumento al ejecutar
-	int i; //Variables para loops
+	TIPO n, buscar, *numeros,pos;
+    POSICION i,j;
+
+
+    parametros param[TAM];
+    pthread_t hilo[TAM];
 
 	//******************************************************************	
 	//Recepción y decodificación de argumentos
@@ -93,24 +108,44 @@ int main (int argc, char* argv[])
     for (i = 0; i < n; i++){/*Llena el arreglo*/
         scanf("%d",&A[i]);
     }
-	
+	pos=-1;
     for (i = 0; i < xn; i++){//Cuenta el tiempo para cada busqueda
+
+    for (j = 0; j < TAM; j++)
+    {
+        param[j].arr=&A[j*n/TAM]; // va creciendo de n/tam cada indice
+        param[j].buscar=x[i];//se le manda el numero a buscar
+        param[j].pos=&pos;//se manda el apuntador de la posicion
+        param[j].n=(j+1)*(n/TAM);  // va creciendo de n/tam cada indice
+    }
 	//******************************************************************	
 	//Iniciar el conteo del tiempo para las evaluaciones de rendimiento
-	//******************************************************************	
+	//******************************************************************
+    	
 	uswtime(&utime0, &stime0, &wtime0);
 	//******************************************************************
 	
 	//******************************************************************	
 	//Algoritmo
 	//******************************************************************	
-	fibMonaccianSearch(A,x[i],n);
+	
+    /*se crea cada hilo con los argumentos que se muestran a continuacion, se usó arreglo de estructuras, ya que se le manda el apuntador*/
+    for (j = 0; j < TAM; j++)
+    {        
+        pthread_create(&hilo[j], NULL, fibMonaccianSearch, (void*)&param[j]);
+    }
+    
 	//******************************************************************
 
 	//******************************************************************	
 	//Evaluar los tiempos de ejecución 
 	//******************************************************************
 	uswtime(&utime1, &stime1, &wtime1);
+    for ( j = 0; j < TAM; j++)
+    {
+    
+    pthread_join(hilo[j], NULL);//se espera a que termine cada hilo
+    }
 	
 	//Acumula el tiempo de ejecución del programa
 	sumwtime += wtime1 - wtime0;
@@ -135,17 +170,30 @@ int main (int argc, char* argv[])
 /**
  * Función:realiza la busqueda de Fibonacci
  * Descripcion: parecido a la busqueda binaria, busqueda de fibonacci, va comparando con porciones en terminos de la serie de fibonacci.
- * Recibe: 
+ * Recibe: en forma de estructura
  *  - arreglo de numeros
  *  - el numero a buscar
  *  - longitud del arreglo
+ *  - posicion
  * Regresa:
- *  - posicion del numero encontrado (o no)
+ *  - void
  * Errores: ninguno
 */
-POSICION fibMonaccianSearch(TIPO arr[], TIPO buscar, TIPO n)
+void* fibMonaccianSearch(void* args)
 {
     POSICION i;
+    TIPO *arr,buscar,n;
+    parametros *param=(parametros*)args;
+
+    if(ESTA(*(param->pos)))
+        pthread_exit(NULL);
+    arr=(TIPO*)param->arr;
+    buscar=(TIPO)param->buscar;
+    n=(TIPO)param->n;
+    /* printf("\n n %d",n);
+    printf("\n arr[0] %d\n",arr[0]);
+     printf("\n pos %d\n",*(param->pos)); */
+    
     /* Inicializar variables (Los primeros numeros de la serie de Fibonacci  0 1 1 )*/
     //Fm = F[m-1]+F[m-2]   e.g.    F[5] = F[3]+F[2]  ya que   0 1 1 "2 3 5" 8 13
     POSICION fibM2 = 0;            // numero (m-2) fibonacci (anterior del anterior)
@@ -163,11 +211,11 @@ POSICION fibMonaccianSearch(TIPO arr[], TIPO buscar, TIPO n)
     }
     POSICION inicio = -1; /*marca el inicio donde se iterará con la serie de fibonacci*/
     /*Busca la posicion */
+ 
     while (fibM > 1)
     {
         // busca el alcance, hasta donde cubre, fibM2 (F[n-2])
         i = min(inicio + fibM2, n - 1);
-
         /* si le numero a buscar, es mayor al numero del arreglo en la posicion i, recorre la posicion de la serie de fibonacci y ahora inicio es la posicion i, es decir, se descarta las posiciones antes de ese i*/
         if (arr[i] < buscar)
         {
@@ -186,16 +234,20 @@ POSICION fibMonaccianSearch(TIPO arr[], TIPO buscar, TIPO n)
         }
 
         /* si lo encuentra, regresa la posicion */
-        else
-            return i;
+        else{
+           *(param->pos)=i;
+            pthread_exit(NULL);
+        }
     }
 
     /* compara el ultimo numero con buscar */
     if (fibM1 && arr[inicio + 1] == buscar)
     {
-        return inicio + 1;
+        *(param->pos)= inicio + 1;
+        pthread_exit(NULL);
     }
 
     /*como no lo encontró, regresa -1 */
-    return -1;
+    *(param->pos)= -1;
+    pthread_exit(NULL);
 }

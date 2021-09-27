@@ -7,7 +7,7 @@
 #define POSICION int /*Significado del los nombres primero, medio y final*/
 
 #define ESTA(pos) (pos != -1)/*verifica si existe la posicion*/
-#define min
+#define min(x,y)   ((x<=y) ? x:y)
 /**
  * Titulo: Practica 2, algoritmo "Busqueda de Fibonacci"
  * Descripción: implementacion del algoritmo de busqueda de Fibonacci
