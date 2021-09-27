@@ -7,6 +7,13 @@
 #define FORMATO "%d" /*formato de datos que se ingresaran*/
 #define POSICION int /*posicion en arreglo*/
 
+/*
+* Se define la estructura Nodo para la construcción del ABB
+* La estructura tiene como elementos:
+* - Variable "dato" de tipo int que almacena el valor numerico del nodo
+* - Apuntador a estructura Nodo "izq" que indica si el nodo tiene ramificación a la izquierda
+* - Apuntador a estructura Nodo "der" que indica si el nodo tiene ramificación a la derecha
+*/
 typedef struct Nodo
 {
     int dato;
@@ -15,6 +22,12 @@ typedef struct Nodo
 
 typedef nodo *apnodo; /*Apuntador a estructura nodo*/
 
+/*
+* Se define la estructura Informacion para pasar como parametro a los hilos
+* La estructura tiene como elementos:
+* - Variable "inf" de tipo int que sera el limite inferior del sub arreglo a analizar
+* - Variable "sup" de tipo int que sera el limite superior del sub arreglo a analizar
+*/
 typedef struct Informacion
 {
     int inf;
@@ -25,6 +38,13 @@ void *Hilo(void *datos);
 void Insertar(apnodo *arbol, TIPO dato);
 int Buscar(apnodo arbol, TIPO dato);
 
+/*
+ * Variables globales
+ * - numeros es el apuntador para crear el arreglo dinamico que almacena los datos a buscar
+ * - dato es el numero a buscar en el arreglo
+ * - n es el numero de elementos a almacenar (tamaño de problema)
+ * - fg sirve como bandera para indicar que el elemento fue encontrado
+ */
 TIPO *numeros, dato, n, fg = 0;
 
 int main(int argc, char* argv[])
@@ -49,32 +69,39 @@ int main(int argc, char* argv[])
     for(int i = 0; i < n; i++)
         scanf(FORMATO,&numeros[i]);
 
-    /*Se crea un apuntador de tipo nodo para ser la raiz inicial del ABB*/
+    /*Se crea un arreglo de estructuras de tipo info para pasar a cada hilo*/
     info *datos = malloc(10 * sizeof(apnodo));
+    /*Se crea un arreglo de 10 hilos*/
     pthread_t *thread;
-
     thread = malloc(10*sizeof(pthread_t));
 
+    /*Se genera el intervalo inicial para el primer hilo*/
     int interv = n/10;
     int inicio = 0;
     int fin = interv - 1;
 
+    /*Se realiza un ciclo para la creación de 10 hilos*/
     for(int i = 0; i < 10; i++)
     {
+        /*Se asignan el intevalo de busqueda en la estructura*/
         datos[i].inf = inicio;
         datos[i].sup = fin;
+        /*Se finaliza el ciclo si la bandera es igual a 1*/
         if(fg == 1)
             break;
 
+        /*Se crea el un hilo pasando como parametro la estructura y ligado a la funcion Hilo*/
         if (pthread_create (&thread[i], NULL, Hilo,(void*)&datos[i]) != 0 )
         {
             perror("El thread no  pudo crearse");
             exit(-1);
         }
+        /*Se actualiza el rango de busqueda para el siguiente Hilo*/
         inicio = fin + 1;
         fin += interv;
     }
 
+    /*Se espera a que termine cada Hilo*/
     for(int i = 0; i < 10; i++) pthread_join (thread[i], NULL);
 
     /*Se libera la memoria*/
@@ -82,6 +109,17 @@ int main(int argc, char* argv[])
     return 0;
 }
 
+/*
+ * Función: Busqueda binaria realizada por hilos
+ * Descripcion: Cada hilo creado ejecuta esta funcion en la cual se implementa la busqueda e insercion en un rango determinado para cada hilo
+ * En caso de que se ponga en alto la bandera fg, se finaliza el hilo y termina la funcion. Si el hilo que esta en la funcion encuentra el dato,
+ * manda un mensaje indicando que encontro el dato, muestra su ID y finaliza el hilo.
+ * Recibe:
+ *  - Apuntador de tipo void
+ * Regresa:
+ *  - void
+ * Errores: ninguno
+*/
 void *Hilo(void* datos)
 {
     info *data = (info*)datos;
@@ -91,10 +129,11 @@ void *Hilo(void* datos)
     if(fg == 1)
         pthread_exit(NULL);
 
-
+    /*Inserta los datos dentro de su rango en el arbol*/
     for(int i = data->inf; i < data->sup; i++)
         Insertar(&arbol,numeros[i]);
 
+    /*Realiza la busqueda en su arbol*/
     if(Buscar(arbol,dato))
     {
         printf("\nEl hilo con ID %lu encontro el dato: %d",pthread_self(),dato);
@@ -106,6 +145,16 @@ void *Hilo(void* datos)
     pthread_exit(NULL);
 }
 
+/*
+ * Función: Realiza la insercion de un nodo al ABB
+ * Descripcion: Se realiza la insercion de un nodo al ABB, si la raiz actual es igual a NULL se agrega un nuevo nodo con el valor recibido por la funcion. Si la raiz no es NULL se crea un apuntador temporal a nodo al que se le asigna el apuntador del arbol recibido como paramtero. Una vez creado el nodo temporal se compara el valor del nodo con el valor recibido por la funcion, si el valor recibido es menor o igual que el valor del nodo, se actualiza el apuntador temporal con el nodo izquierdo del mismo; en caso contrario se actualiza con el apuntador al nodo derecho del temporal. El algoritmo se ejecutara mientras que el nodo temporal no sea NULL. Al momento en el que el temporal sea NULL y salga del ciclo, se compara si en el nodo con la ultima posicion previa al NULL tiene un valor menor o mayor que el dato a insertar, si el numero del nodo es menor al dato recibido, se asigna el nodo con el apuntador izquierdo; si es mayor se asigna en el derecho
+ * Recibe:
+ *  - Apuntador a apnodo
+ *  - Valor entero a insertar
+ * Regresa:
+ *  - void
+ * Errores: ninguno
+*/
 void Insertar(apnodo *arbol, TIPO dato)
 {
     /*Se crea un nuevo nodo con el dato recibido*/
@@ -157,6 +206,18 @@ void Insertar(apnodo *arbol, TIPO dato)
     }
 }
 
+/*
+ * Función: Realiza la busqueda de un dato en el ABB
+ * Descripcion: Realiza la busqueda de un elemento den el ABB de manera similar a la funcion de insercion.
+ * Se realiza un ciclo que se ejecuta mientras que el apuntador del arbol sea distinto de NULL y mientras el valor del nodo sea distinto del dato buscado. Dentro del ciclo se realiza la comparacion del dato recibido y el dato del nodo actual. En caso de que el valor buscado sea menor quel del nodo actual, se actualiza con el nodo izquiero y si es mayor con  el nodo derecho. Al salir del ciclo se retorna el valor obtenido al revisar si el arbol es diferente a NULL. Si el arbol es diferente de NULL se retorna 1, en caso contrario se retorna 0.
+ * Recibe:
+ *  - Apuntador a apnodo
+ *  - Arreglo de tipo entero
+ * Regresa:
+ *  - 1 si el elemento se encontro
+ *  - 0 si el elemento no se encontro
+ * Errores: ninguno
+*/
 int Buscar(apnodo arbol, TIPO dato)
 {
     /*Se ejecuta un ciclo mientras que el apuntador arbol sea diferente de NULL
