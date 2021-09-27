@@ -60,7 +60,7 @@ int main(int argc, char const *argv[])
 		pos = fibMonaccianSearch(numeros, buscar[i],n);
 
 		/*se verifica si se encontro el numero*/
-    ESTA(pos) ? printf("Se encuentra en la posicion: %d\n", pos) : printf("no se encuentra");
+    ESTA(pos) ? printf("Se encuentra en la posicion: %d\n", pos) : printf("no se encuentra\n");
 	}
     /*se libera la memoria*/
     free(numeros);
