@@ -12,6 +12,7 @@
 #define ESTA(pos) (pos != -1)/*verifica si existe la posicion*/
 #define min(x,y)   ((x<=y) ? x:y)
 
+/*estructura de los parametros que se le envia a la funcion de cada hilo*/
 typedef struct 
 {
       TIPO* arr;
@@ -67,21 +68,22 @@ int main(int argc, char const *argv[])
 
     /*se llama a la función*/
 
-    //param = &paramData;
+    
     pos=-1;
+    /*se crea cada hilo con los argumentos que se muestran a continuacion, se usó arreglo de estructuras, ya que se le manda el apuntador*/
     for ( i = 0; i < TAM; i++)
     {
-        param[i].arr=&numeros[i*n/TAM]; 
-        param[i].buscar=buscar;
-        param[i].pos=&pos;
-        param[i].n=(i+1)*(n/TAM);  
+        param[i].arr=&numeros[i*n/TAM]; // va creciendo de n/tam cada indice
+        param[i].buscar=buscar;//se le manda el numero a buscar
+        param[i].pos=&pos;//se manda el apuntador de la posicion
+        param[i].n=(i+1)*(n/TAM);  // va creciendo de n/tam cada indice
         pthread_create(&hilo[i], NULL, fibMonaccianSearch, (void*)&param[i]);
     }
     
     for ( i = 0; i < TAM; i++)
     {
     
-    pthread_join(hilo[i], NULL);
+    pthread_join(hilo[i], NULL);//se espera a que termine cada hilo
     }
 
     /*se verifica si se encontro el numero*/
