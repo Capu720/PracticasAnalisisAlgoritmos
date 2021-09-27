@@ -97,7 +97,9 @@ int main (int argc, char* argv[])
         scanf("%d",&A[i]);
     }
 
-    /*Se insertan los n numeros en el ABB*/
+	/*Se crea un apuntador de tipo nodo para ser la raiz inicial del ABB*/
+	apnodo arbol = NULL;    
+	/*Se insertan los n numeros en el ABB*/
 	for (int i = 0; i < n; i++)
 		Insertar(&arbol, numeros[i]);
 
@@ -113,9 +115,9 @@ int main (int argc, char* argv[])
 	//******************************************************************
 	/*Se realiza la funcion de busqueda en el ABB*/
 	if (Buscar(arbol, dato))
-		printf("\nSe encontro el dato: %d", dato);
+		printf("\nSe encontro el dato: %d", x[i]);
 	else
-		printf("\nNo se encontro el dato: %d", dato);
+		printf("\nNo se encontro el dato: %d", x[i]);
 	//******************************************************************
 
 	//******************************************************************
