@@ -3,10 +3,10 @@
 
 /*
  * Titulo: Practica 2, algoritmo "Busqueda en ABB"
- * Descripción: implementacion del algoritmo ABB
+ * Descripcion: implementacion del algoritmo ABB
  * para la busqueda de elementos
  * Fecha: 23-sep-2021
- * Versión: 1
+ * Version: 1
 */
 
 #define TIPO int	 /*tipo de datos que se ingresaran*/
@@ -17,8 +17,8 @@
 * Se define la estructura Nodo para la construcción del ABB
 * La estructura tiene como elementos:
 * - Variable "dato" de tipo int que almacena el valor numerico del nodo
-* - Apuntador a estructura Nodo "izq" que indica si el nodo tiene ramificación a la izquierda
-* - Apuntador a estructura Nodo "der" que indica si el nodo tiene ramificación a la derecha
+* - Apuntador a estructura Nodo "izq" que indica si el nodo tiene ramificacionn a la izquierda
+* - Apuntador a estructura Nodo "der" que indica si el nodo tiene ramificacion a la derecha
 */
 
 typedef struct Nodo
@@ -83,7 +83,7 @@ int main(int argc, char *argv[])
 }
 
 /*
- * Función: Realiza la insercion de un nodo al ABB
+ * Funcion: Realiza la insercion de un nodo al ABB
  * Descripcion: Se realiza la insercion de un nodo al ABB, si la raiz actual es igual a NULL se agrega un nuevo nodo con el valor recibido por la funcion. Si la raiz no es NULL se crea un apuntador temporal a nodo al que se le asigna el apuntador del arbol recibido como paramtero. Una vez creado el nodo temporal se compara el valor del nodo con el valor recibido por la funcion, si el valor recibido es menor o igual que el valor del nodo, se actualiza el apuntador temporal con el nodo izquierdo del mismo; en caso contrario se actualiza con el apuntador al nodo derecho del temporal. El algoritmo se ejecutara mientras que el nodo temporal no sea NULL. Al momento en el que el temporal sea NULL y salga del ciclo, se compara si en el nodo con la ultima posicion previa al NULL tiene un valor menor o mayor que el dato a insertar, si el numero del nodo es menor al dato recibido, se asigna el nodo con el apuntador izquierdo; si es mayor se asigna en el derecho   
  * Recibe:
  *  - Apuntador a apnodo
@@ -144,7 +144,7 @@ void Insertar(apnodo *arbol, TIPO dato)
 }
 
 /*
- * Función: Realiza la busqueda de un dato en el ABB
+ * Funcion: Realiza la busqueda de un dato en el ABB
  * Descripcion: Realiza la busqueda de un elemento den el ABB de manera similar a la funcion de insercion.
  * Se realiza un ciclo que se ejecuta mientras que el apuntador del arbol sea distinto de NULL y mientras el valor del nodo sea distinto del dato buscado. Dentro del ciclo se realiza la comparacion del dato recibido y el dato del nodo actual. En caso de que el valor buscado sea menor quel del nodo actual, se actualiza con el nodo izquiero y si es mayor con  el nodo derecho. Al salir del ciclo se retorna el valor obtenido al revisar si el arbol es diferente a NULL. Si el arbol es diferente de NULL se retorna 1, en caso contrario se retorna 0.
  * Recibe:
