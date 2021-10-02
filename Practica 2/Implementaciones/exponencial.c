@@ -48,11 +48,19 @@ int main(int argc, char const *argv[])
 	return 0;
 }
 
-/*Funcion de busqueda eponencial
-Recibe como parametros un arreglo, el tamanio del arreglo, y el numero a buscar
-La siguiente funcion realiza de forma iterativa el algoritmo de busqueda exponencial
-Regresa como valor la posicion donde se encuentra el elemento, o un -1 si no lo encunetra
-NO presenta errores
+/*
+*Funcion de busqueda exponencial
+*Descripcion:La siguiente funcion realiza de forma iterativa el algoritmo de busqueda exponencial,
+*basicamente consiste en dos pasos, primero verifica si el numero se encuentra en la primera posicion
+*del arreglo, si lo encuentra devuelve la posicion 0 del arreglo. En caso contrario, actualiza los rangos
+*en potencia de dos hasta hallar un rango que este mas cerca del numero, despues realiza una busqueda
+*binaria con los rangos del caso anterior en caso de encontrar el valor, devuelve la posicion donde 
+*se encuentra el numero a buscar, en caso contrario regresa -1
+* Recibe:
+ *  - El arreglo, el tamanio del arreglo, y el numero a buscar
+ * Regresa:
+ *  - int
+ * Errores: ninguno
 */
 
 int BusquedaExponencial(int *A, int n, int num)

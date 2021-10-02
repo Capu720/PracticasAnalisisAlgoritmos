@@ -12,8 +12,9 @@
 #include <unistd.h>
 #define min
 
-//Esqueleto de la funcion
+//Diseño de la estructura
 
+//Esqueleto de la funcion
 void BusquedaExponencial(int *, int, int);
 void *Busqueda(void *);
 
@@ -105,7 +106,7 @@ void BusquedaExponencial(int *A, int n, int num)
 		rango_sup[j] = h;
 		j++;
 	}
-
+	
 	for (int i = 1; i < numHilos; i++)
 	{
 		if (pthread_create(&thread[i], NULL, Busqueda, (void *)i) != 0)
