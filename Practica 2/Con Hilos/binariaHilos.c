@@ -1,6 +1,6 @@
 /*
-* Titulo: Practica 2, algoritmo "Busqueda lineal"
-* Descripcion: Implementacion del algoritmo de busqueda lineal con hilos
+* Titulo: Practica 2, algoritmo "Busqueda binaria"
+* Descripcion: Implementacion del algoritmo de busqueda binaria con hilos
 * Fecha: 27-sep-2021
 * Version: 1.0
 */
@@ -19,7 +19,7 @@ typedef struct
 }parametros;
 
 //Esqueleto de las funciones
-int busquedaLineal(int ini, int n, int x); /*Prototipo de la funcion*/
+int busquedaBinaria(int ini, int n, int x); /*Prototipo de la funcion*/
 void *Hilo(void *datos);
 
 //Variables globales
@@ -82,23 +82,31 @@ int main(int argc, char *argv[]){
     return EXIT_SUCCESS;
 }
 
-
 /*
-*Recibe: El rango inferior, superior y el numero a buscar
+*Recibe: posicion de inicio, posicion final y el elemento a buscar
 *Regresa: int
 *Errores: Ninguno
 */
-int busquedaLineal(int ini, int n, int x)
-{
-    int i;                  //Declara el indice
-    for (i = ini; i < n; i++) //Recorre el arreglo
-        if (numeros[i] == x)    //Compara el elemento buscado con el de la posicion i
-            return i;       //Regresa la posicion donde se encuentra
-    return -1;              //Regresa -1 si no lo encuentra
+
+int busquedaBinaria(int l, int r, int x){
+    while (l <= r) {
+        int m = l + (r - l) / 2;//Dvide el arreglo a la mitad
+        // Revisa si x esta en la mitad
+        if (numeros[m] == x)
+            return m;
+        // Si x es mayor, se va por la derecha
+        if (numeros[m] < x)
+            l = m + 1;
+        // Si x es menor, se va por la izquierda
+        else
+            r = m - 1;
+    }
+    // Si el elemento no se encuentra regresa -1
+    return -1;
 }
 
 /*
- * Función: Busqueda lineal realizada por hilos
+ * Función: Busqueda binaria realizada por hilos
  * Descripcion: Cada hilo creado ejecuta esta funcion en la cual se implementa la busqueda en un rango determinado para cada hilo
  * En caso de que se ponga en alto la bandera fg, se finaliza el hilo y termina la funcion. Si el hilo que esta en la funcion encuentra el dato,
  * manda un mensaje indicando que encontro el dato, muestra su ID, posicion y finaliza el hilo.
@@ -118,7 +126,7 @@ void *Hilo(void* datos){
     int num = param->buscar;
 
     //Almacenamos el valor devuelto por la funcion de busqueda lineal
-    int resu = busquedaLineal(param->inicio, param->fin, param->buscar);
+    int resu = busquedaBinaria(param->inicio, param->fin, param->buscar);
 
     //Si el resultado es diferente de -1, quiere decir que encontro el resultado
     if(resu != -1)

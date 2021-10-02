@@ -41,23 +41,14 @@ typedef struct
 //DECLARACIÓN DE FUNCIONES
 //*****************************************************************
 /*
-*Funcion de busqueda exponencial
-*Descripcion:La siguiente funcion realiza de forma iterativa el algoritmo de busqueda exponencial,
-*basicamente consiste en dos pasos, primero verifica si el numero se encuentra en la primera posicion
-*del arreglo, si lo encuentra devuelve la posicion 0 del arreglo. En caso contrario, actualiza los rangos
-*en potencia de dos hasta hallar un rango que este mas cerca del numero, despues realiza una busqueda
-*binaria con los rangos del caso anterior en caso de encontrar el valor, devuelve la posicion donde 
-*se encuentra el numero a buscar, en caso contrario regresa -1
-* Recibe:
- *  - La posicion final, el numero a buscar, y el inicio del rango
- * Regresa:
- *  - int
- * Errores: ninguno
+*Recibe: El rango inferior, superior y el numero a buscar
+*Regresa: int
+*Errores: Ninguno
 */
-int BusquedaExponencial(int, int, int);
+int busquedaLineal(int ini, int n, int x); /*Prototipo de la funcion*/
 
 /*
- * Función: Busqueda exponencial realizada por hilos
+ * Función: Busqueda lineal realizada por hilos
  * Descripcion: Cada hilo creado ejecuta esta funcion en la cual se implementa la busqueda en un rango determinado para cada hilo
  * En caso de que se ponga en alto la bandera fg, se finaliza el hilo y termina la funcion. Si el hilo que esta en la funcion encuentra el dato,
  * manda un mensaje indicando que encontro el dato, muestra su ID, posicion y finaliza el hilo.
@@ -67,6 +58,7 @@ int BusquedaExponencial(int, int, int);
  *  - void
  * Errores: ninguno
 */
+
 void *Hilo(void *datos);
 
 //*****************************************************************
@@ -119,11 +111,10 @@ int main (int argc, char* argv[])
 	
     for (int j = 0; j < xn; j++)//Cuenta el tiempo para cada busqueda
 	{
-		//DEclaramos los rangos de busqeuda
-		int intervalo = n/numHilos;
-		int inicio = 0;
-		int fin = intervalo-1;
-
+        //DEclaramos los rangos de busqeuda
+        int intervalo = n/numHilos;
+        int inicio = 0;
+        int fin = intervalo-1;
 		//******************************************************************	
 		//Iniciar el conteo del tiempo para las evaluaciones de rendimiento
 		//******************************************************************
@@ -135,7 +126,7 @@ int main (int argc, char* argv[])
 		//Algoritmo
 		//******************************************************************	
 	
-     //Se van creando los hilos y sus respectivos argumentos
+        //Se van creando los hilos y sus respectivos argumentos
     	for(int i = 0; i<numHilos; i++)
     	{
 			param[i].fin = fin;
@@ -169,7 +160,7 @@ int main (int argc, char* argv[])
 		
 		//Acumula el tiempo de ejecución del programa
 		sumwtime += wtime1 - wtime0;
-		fg=0;
+        fg = 0;
     }
 
     //Cálculo del tiempo promedio de ejecución del programa
@@ -190,59 +181,21 @@ int main (int argc, char* argv[])
 //************************************************************************
 
 /*
-*Funcion de busqueda exponencial
-*Descripcion:La siguiente funcion realiza de forma iterativa el algoritmo de busqueda exponencial,
-*basicamente consiste en dos pasos, primero verifica si el numero se encuentra en la primera posicion
-*del arreglo, si lo encuentra devuelve la posicion 0 del arreglo. En caso contrario, actualiza los rangos
-*en potencia de dos hasta hallar un rango que este mas cerca del numero, despues realiza una busqueda
-*binaria con los rangos del caso anterior en caso de encontrar el valor, devuelve la posicion donde 
-*se encuentra el numero a buscar, en caso contrario regresa -1
-* Recibe:
- *  - La posicion final, el numero a buscar, y el inicio del rango
- * Regresa:
- *  - int
- * Errores: ninguno
+*Recibe: El rango inferior, superior y el numero a buscar
+*Regresa: int
+*Errores: Ninguno
 */
-
-int BusquedaExponencial(int n, int num, int ini)
+int busquedaLineal(int ini, int n, int x)
 {
-	int i;
-
-    //Primero checamos si el primer elemento del arreglo es el que buscamos
-	if(numeros[ini] == num)
-        return ini;
-    
-	int pos = ini+1; //Declaramos una variable para acceder a la posicion del arreglo
-
-	/*Se realiza un ciclo while donde el elemento a buscar debe de estar presente. Compara si la posicion es menor
-	al tamanio del arreglo y si el numero que esta en el arreglo menor o igual al numero a buscar*/
-
-	while (pos < n && numeros[pos] <= num)
-		pos = pos * 2;
-
-    /*Declaramos los primeros valores de los rangos*/
-	int low = pos / 2;
-	int high = min(pos, n);
-	while (low <= high)
-	{   
-		pos = low + (high - low) / 2;
-    
-        if (numeros[pos] == num)// Si encontramos el numero en la posicion del arreglo, regresamos la posicion
-            return pos;      
-    
-		else if (numeros[pos] < num) //Comparamos si el numero en la posicion en el arrego es menor al numero, e incrementar el rango menor
-			low = pos + 1;
-
-		else
-			high = pos - 1; //Si no se cumple lo anterior, se decrementa el rango mayor
-	}
-    //Si no esta regresa -1
-    return -1;
-
+    int i;                  //Declara el indice
+    for (i = ini; i < n; i++) //Recorre el arreglo
+        if (numeros[i] == x)    //Compara el elemento buscado con el de la posicion i
+            return i;       //Regresa la posicion donde se encuentra
+    return -1;              //Regresa -1 si no lo encuentra
 }
 
 /*
- * Función: Busqueda exponencial realizada por hilos
+ * Función: Busqueda lineal realizada por hilos
  * Descripcion: Cada hilo creado ejecuta esta funcion en la cual se implementa la busqueda en un rango determinado para cada hilo
  * En caso de que se ponga en alto la bandera fg, se finaliza el hilo y termina la funcion. Si el hilo que esta en la funcion encuentra el dato,
  * manda un mensaje indicando que encontro el dato, muestra su ID, posicion y finaliza el hilo.
@@ -259,18 +212,18 @@ void *Hilo(void* datos){
     if(fg == 1)
         pthread_exit(NULL);
 
-    /*Se insertan los datos dentro de su rango*/
-    //int tamanio = param->fin - param->inicio; 
     int num = param->buscar;
 
-    //Almacenamos el valor devuelto por la funcion de busqueda exponencial
-    int resu = BusquedaExponencial(param->fin, param->buscar, param->inicio);
+    //Almacenamos el valor devuelto por la funcion de busqueda lineal
+    int resu = busquedaLineal(param->inicio, param->fin, param->buscar);
 
     //Si el resultado es diferente de -1, quiere decir que encontro el resultado
     if(resu != -1)
+    {
         fg = 1;
+    }
+    
 
     pthread_exit(NULL);
 
 }
-

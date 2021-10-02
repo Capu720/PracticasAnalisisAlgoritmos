@@ -1,5 +1,5 @@
 /*
-* Titulo: Practica 2, algoritmo "Busqueda Binaria"
+* Titulo: Practica 2, algoritmo "Busqueda exponencial"
 * Descripcion: Implementacion del algoritmo de busqueda exponencial con hilos
 * Fecha: 27-sep-2021
 * Version: 1.0
@@ -65,7 +65,6 @@ int main(int argc, char const *argv[])
         param[i].fin = fin;
         param[i].inicio = inicio;
         param[i].buscar = buscar;
-        //Preguntamos si se encontro
         
 
         /*Se crea el un hilo pasando como parametro la estructura y ligado a la funcion Hilo*/
@@ -159,8 +158,6 @@ void *Hilo(void* datos){
     if(fg == 1)
         pthread_exit(NULL);
 
-    /*Se insertan los datos dentro de su rango*/
-    //int tamanio = param->fin - param->inicio; 
     int num = param->buscar;
 
     //Almacenamos el valor devuelto por la funcion de busqueda exponencial
