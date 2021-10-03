@@ -1,7 +1,7 @@
 #!/bin/bash
 gcc linealhilostiempo.c tiempo.c -pthread -o lineal.o
 gcc ABBHTiempo.c tiempo.c -pthread -o ABB.o
-./gcc binariahilostiempo.c tiempo.c -pthread -o binaria.o
+gcc binariahilostiempo.c tiempo.c -pthread -o binaria.o
 gcc exponhilostiempo.c tiempo.c -pthread -o exponencial.o
 gcc fibonacci.c tiempo.c -pthread -o fibonacci.o
 
@@ -15,7 +15,7 @@ do
 done
 
 #echo -e "\nABB" >> salida.txt
-echo -e "\nFibonacci" > salida.txt
+echo -e "\nABB" >> salida.txt
 for i in ${n[@]}
 do
 ./ABB.o $i < numeros10millones.txt >> salida.txt
@@ -36,7 +36,7 @@ do
 done
 
 #echo -e "\nFibonacci" >> salida.txt
-echo -e "\nFibonacci" > salida.txt
+echo -e "\nFibonacci" >> salida.txt
 for i in ${n[@]}
 do
 ./fibonacci.o $i < 10millones.txt >> salida.txt

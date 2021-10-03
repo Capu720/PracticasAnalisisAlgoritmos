@@ -77,7 +77,7 @@ int Buscar(apnodo arbol, TIPO dato);
  * - n es el numero de elementos a almacenar (tamaño de problema)
  * - fg sirve como bandera para indicar que el elemento fue encontrado
  */
-TIPO *A, dato, n, fg = 0;
+TIPO *A, dato, n, numhilos, fg = 0;
 //*****************************************************************
 //PROGRAMA PRINCIPAL
 //*****************************************************************
@@ -88,7 +88,7 @@ int main (int argc, char* argv[])
 	//******************************************************************
 	double sumwtime, utime0, stime0, wtime0,utime1, stime1, wtime1; //Variables para medición de tiempos
 	int n; 	//n determina el tamaño del algorito dado por argumento al ejecutar
-	int i; //Variables para loops
+	int i,k; //Variables para loops
 
 	//******************************************************************
 	//Recepción y decodificación de argumentos
@@ -119,24 +119,18 @@ int main (int argc, char* argv[])
         scanf("%d",&A[i]);
     }
 
-	/*Se crea un apuntador de tipo nodo para ser la raiz inicial del ABB*/
-	apnodo arbol = NULL;    
-	/*Se insertan los n numeros en el ABB*/
-	for (int i = 0; i < n; i++)
-		Insertar(&arbol, A[i]);
-
+    numhilos = 2;
     /*Se crea un arreglo de estructuras de tipo info para pasar a cada hilo*/
-    info *datos = malloc(10 * sizeof(apnodo));
+    info datos[numhilos];
     /*Se crea un arreglo de 10 hilos*/
-    pthread_t *thread;
-    thread = malloc(10*sizeof(pthread_t));
+    pthread_t thread[numhilos];
 
     /*Se genera el intervalo inicial para el primer hilo*/
-    int interv = n/10;
+    int interv = n/numhilos;
     int inicio = 0;
     int fin = interv - 1;
 
-    for(int i = 0; i < 10; i++)
+    for(i = 0; i < numhilos; i++)
     {
         /*Se asignan el intevalo de busqueda en la estructura*/
         datos[i].inf = inicio;
@@ -146,7 +140,7 @@ int main (int argc, char* argv[])
         fin += interv;
     }
 
-    for (i = 0; i < xn; i++){//Cuenta el tiempo para cada busqueda
+    for (int j = 0; j < xn; j++){//Cuenta el tiempo para cada busqueda
 	//******************************************************************
 	//Iniciar el conteo del tiempo para las evaluaciones de rendimiento
 	//******************************************************************
@@ -156,17 +150,13 @@ int main (int argc, char* argv[])
 	//******************************************************************
 	//Algoritmo
 	//******************************************************************
-
-
-    /*Se realiza un ciclo para la creación de 10 hilos*/
-    for(int i = 0; i < 10; i++)
+    fg = 0;
+    dato = x[j];
+    /*Se realiza un ciclo para la creación de hilos*/
+    for(k = 0; k < numhilos; k++)
     {
-        /*Se finaliza el ciclo si la bandera es igual a 1*/
-        if(fg == 1)
-            break;
-
         /*Se crea el un hilo pasando como parametro la estructura y ligado a la funcion Hilo*/
-        if (pthread_create (&thread[i], NULL, Hilo,(void*)&datos[i]) != 0 )
+        if (pthread_create (&thread[k], NULL, Hilo,(void*)&datos[k]) != 0 )
         {
             perror("El thread no  pudo crearse");
             exit(-1);
@@ -180,7 +170,7 @@ int main (int argc, char* argv[])
 	//******************************************************************
 	uswtime(&utime1, &stime1, &wtime1);
     /*Se espera a que termine cada Hilo*/
-    for(int i = 0; i < 10; i++) pthread_join (thread[i], NULL);
+    for(i = 0; i < numhilos; i++) pthread_join (thread[i], NULL);
 	//Acumula el tiempo de ejecución del programa
 	sumwtime += wtime1 - wtime0;
     }
@@ -220,11 +210,12 @@ void *Hilo(void* datos)
     /*Se insertan los n numeros en el ABB*/
     if(fg == 1)
         pthread_exit(NULL);
-
     /*Inserta los datos dentro de su rango en el arbol*/
     for(int i = data->inf; i < data->sup; i++)
         Insertar(&arbol,A[i]);
 
+    if(fg == 1)
+        pthread_exit(NULL);
     /*Realiza la busqueda en su arbol*/
     if(Buscar(arbol,dato))
         fg = 1;
@@ -311,8 +302,10 @@ int Buscar(apnodo arbol, TIPO dato)
      *    	y el valor del nodo sea distinto al dato buscado*/
     while(arbol != NULL && arbol->dato != dato)
     {
+        if(fg == 1)
+            return 0;
         /*Se compara el valor del nodo actual con el dato recibido*/
-        if(dato < arbol->dato)
+        else if(dato < arbol->dato)
             /*Si el dato recibido es menor que el del nodo actual
              * se actualiza el apuntador arbol al apuntador izquierdo del nodo*/
             arbol = arbol->izq;
@@ -322,6 +315,6 @@ int Buscar(apnodo arbol, TIPO dato)
             arbol = arbol->der;
     }
     /*Se retorna el valor obtenido del condicional. Se retorna 1 si el arbol no
-     *        es NULL y 1 en caso contrario*/
+     *        es NULL y 0 en caso contrario*/
     return arbol != NULL;
 }
