@@ -1,6 +1,6 @@
 /*
-* Titulo: Practica 2, algoritmo "Busqueda Binaria"
-* Descripcion: Implementacion del algoritmo de busqueda binaria
+* Titulo: Practica 2, algoritmo "Busqueda Expoencial"
+* Descripcion: Implementacion del algoritmo de busqueda exponencial
 * Fecha: 27-sep-2021
 * Version: 1.0
 */
