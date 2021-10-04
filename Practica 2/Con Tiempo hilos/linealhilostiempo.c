@@ -8,8 +8,8 @@
 //Ejecución: "./main n" (Linux y MAC OS)
 //*****************************************************************
 /**
- * Titulo: Practica 2, algoritmo "Busqueda exponencial con hilos"
- * Descripción: implementacion del algoritmo de busqueda exponencial con hilos
+ * Titulo: Practica 2, algoritmo "Busqueda lineal con hilos"
+ * Descripción: implementacion del algoritmo de busqueda lineal con hilos
  * Fecha: 27-sep-2021
  * Versión: 4
 */
